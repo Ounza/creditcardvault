@@ -30,7 +30,7 @@
 		<?php endif ?>
 		<!-- logged in user information -->
 		<div class="profile_info">
-			<img src="images/user_profile.png" width="200" height="200" >
+			<img src="images/user_profile.png" width="100" height="100" >
 
 			<div>
 				<?php  if (isset($_SESSION['user'])) : ?>
@@ -39,7 +39,7 @@
 					<small>
 						<i  style="color: #888;">(<?php echo ucfirst($_SESSION['user']['user_type']); ?>)</i> 
 						<br>
-						&nbsp; <a href="indexLevel1.php"> + add subscriber</a>
+						&nbsp; <a href="indexLevel1.php"> + card information</a>
 						<a href="userLogin.php?logout='1'" style="color: red;">logout</a>
 					</small>
 

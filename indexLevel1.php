@@ -12,13 +12,16 @@ if (isset($_GET['logout'])) {
 	header("location: login.php");
 }
 ?>
-<h1>View For a Level 1 User</h1>
+<h1>Welcome to the Credit Card Vault</h1>
 <ul>
   <li>
-    <a href="createSubscriber.php"><strong>Create</strong></a> - Add a subscriber
+    <a href="createSubscriber.php"><strong>Add Credit Card Information</strong></a>
   </li>
   <li>
-    <a href="readSubscriber.php"><strong>Read</strong></a> - Find a subscriber
+    <a href="updateSubscriber.php"><strong>Update My Information</strong></a>
+  </li>
+  <li>
+    <a href="deletesubscriber-single.php"><strong>Delete My Information</strong></a>
   </li>
 </ul>
 

@@ -1,7 +1,7 @@
 <?php 
 include('functions.php');
 
-if (!isAdmin()) {
+if (!isLevel1()) {
 	$_SESSION['msg'] = "You must log in first";
 	header('location: login.php');
 }
@@ -88,6 +88,6 @@ if (isset($_GET['id'])) {
     <input type="submit" name="submit" value="Submit">
 </form>
 
-<a href="admin/home.php">Back to home</a>
+<a href="userLogin.php">Back to home</a>
 
 <?php require "templates/footer.php"; ?>

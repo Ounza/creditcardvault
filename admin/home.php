@@ -56,7 +56,7 @@ if (isset($_GET['logout'])) {
 						<br>
 						<a href="home.php?logout='1'" style="color: red;">logout</a>
                        &nbsp; <a href="create_user.php"> + add user</a>
-					   &nbsp; <a href="../indexAdmin.php"> + add subscriber</a>
+					   &nbsp; <a href="indexAdmin.php">view subscriber info</a>
 					</small>
 
 				<?php endif ?>
