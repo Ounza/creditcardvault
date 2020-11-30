@@ -13,6 +13,9 @@ if (isset($_GET['logout'])) {
 }
 ?>
 <?php
+//Decryption Keys
+$cardkey = 'pass1234';
+$cvvkey = 'pass5678';
 
 /**
   * Delete a user
@@ -46,14 +49,14 @@ if (isset($_POST['submit'])) {
       $sql = "SELECT *
       FROM subscribers
       WHERE firstname = :firstname
-      AND lastname = :lastname";
-  
+      AND AES_DECRYPT(cardnumber, '$cardkey') = :cardnumber";
+
       $firstname = $_POST['firstname'];
-      $lastname = $_POST['lastname'];
-  
+      $cardnumber = $_POST['cardnumber'];
+
       $statement = $connection->prepare($sql);
       $statement->bindParam(':firstname', $firstname, PDO::PARAM_STR);
-      $statement->bindParam(':lastname', $lastname, PDO::PARAM_STR);
+      $statement->bindParam(':cardnumber', $cardnumber, PDO::PARAM_STR);
       $statement->execute();
   
       $result = $statement->fetchAll();
@@ -65,8 +68,6 @@ if (isset($_POST['submit'])) {
 ?>
 
 <?php require "templates/header.php"; ?>
-
-<h2>Delete</h2>
 
 <?php
 if (isset($_POST['submit'])) {
@@ -101,7 +102,7 @@ if (isset($_POST['submit'])) {
       </tbody>
   </table>
   <?php } else { ?>
-    > No results found for <?php echo escape($_POST['lastname']); ?>.
+    > No results found for <?php echo escape($_POST['firstname']); ?>.
   <?php }
 } ?>
 <h2>Please Confirm the following Information</h2>
@@ -109,8 +110,8 @@ if (isset($_POST['submit'])) {
 <form method="post">
   <label for="location">First Name</label>
   <input type="text" id="firstname" name="firstname">
-  <label for="location">Last Name</label>
-  <input type="text" id="lastname" name="lastname">
+  <label for="location">Card Number</label>
+  <input type="text" id="cardnumber" name="cardnumber">
   <input type="submit" name="submit" value="View Results">
 </form>
 <a href="userLogin.php">Back to home</a>

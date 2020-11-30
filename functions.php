@@ -40,6 +40,18 @@ function register(){
 		array_push($errors, "The two passwords do not match");
 	}
 
+	//form validation: checking if username and email exists
+	$sql_u = "SELECT * FROM users WHERE username='$username'";
+  	$sql_e = "SELECT * FROM users WHERE email='$email'";
+  	$res_u = mysqli_query($db, $sql_u);
+  	$res_e = mysqli_query($db, $sql_e);
+
+  	if (mysqli_num_rows($res_u) > 0) {
+  	  array_push($errors, "Sorry... username already taken"); 	
+  	}else if(mysqli_num_rows($res_e) > 0){
+  	  array_push($errors, "Sorry... email already taken"); 	
+  	}else
+
 	// register user if there are no errors in the form
 	if (count($errors) == 0) {
 		$password = sha1($password_1);//encrypt the password before saving in the database

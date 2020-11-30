@@ -1,7 +1,7 @@
 <?php 
 include('functions.php');
 
-if (!isLevel1() && !isLevel2() && !isAdmin()) {
+if (!isLevel1() && !isAdmin()) {
 	$_SESSION['msg'] = "You must log in first";
 	header('location: login.php');
 }
@@ -36,6 +36,7 @@ if (isset($_POST['submit'])) {
   $cardkey = 'pass1234';
   $cvvkey = 'pass5678';
   
+ 
   //Insert Statement
   $sql = "INSERT INTO subscribers ( firstname, lastname, cardnumber, cvv, location)
           VALUES (:firstname, :lastname, AES_ENCRYPT(:cardnumber, '$cardkey'), AES_ENCRYPT(:cvv, '$cvvkey'), :location)";
@@ -45,12 +46,31 @@ if (isset($_POST['submit'])) {
   $sql_statement->bindParam(':cardnumber', $_REQUEST['cardnumber']);
   $sql_statement->bindParam(':cvv', $_REQUEST['cvv']);
   $sql_statement->bindParam(':location', $_REQUEST['location']);
-  if ($sql_statement->execute()) {
+  
+  //Checking if details were already filled
+   $cardnumber = $_POST['cardnumber'];
+   $chk = $connection->prepare("SELECT AES_DECRYPT(cardnumber, '$cardkey') as cardnumber FROM subscribers WHERE cardnumber =  :cardnumber");
+   $chk->bindParam(':cardnumber', $cardnumber);
+   $chk->execute();
+
+   if($chk->rowCount() == 0){
+   if( $sql_statement->execute() ){
+      echo 'Successfully added your subscription information.';
+      }
+    else{
+      echo 'Error !! Something must have gone wrong.';
+       }
+      }
+  else{
+    echo 'Error ! ! You must have already added your subscription information';
+  }
+ 
+ /* if ($sql_statement->execute()) {
     echo "New record created successfully";
   } else {
     echo "Unable to create record";
   }
-
+*/
 }  
 ?>
 
